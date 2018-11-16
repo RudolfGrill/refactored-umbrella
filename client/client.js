@@ -1,7 +1,10 @@
+"use strict"
+
 console.log("Hello World!");
 
 const form = document.querySelector('form');
 const loadingElement = document.querySelector('.loading');
+const API_URL = 'http://localhost:5000/barks';
 
 loadingElement.style.display = 'none';
 
@@ -16,10 +19,16 @@ form.addEventListener('submit', (event) => {
     content,
   };
 
-  console.log(bark);
 
   form.style.display = 'none';
   loadingElement.style.display = '';
 
+  fetch(API_URL, {
+    method: 'POST',
+    body: JSON.stringify(bark),
+    headers:  {
+      'content-type': 'application/json'
+    }
 
+  })
 });

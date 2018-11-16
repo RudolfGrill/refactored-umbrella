@@ -1,2 +1,2 @@
 # refactored-umbrella
-my twitter clone app
+my twitter clone app for dogs 🐕
