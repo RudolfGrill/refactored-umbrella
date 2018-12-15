@@ -30,5 +30,8 @@ form.addEventListener('submit', (event) => {
       'content-type': 'application/json'
     }
 
-  })
+  }).then(response => response.json())
+    .then(createdBark => {
+      console.log();
+    });
 });

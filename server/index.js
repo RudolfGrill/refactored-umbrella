@@ -28,7 +28,8 @@ app.post('/barks', (req, res)=>{
     //to db
     const bark = {
       name: req.body.name.toString(),
-      content: req.body.content.toString()
+      content: req.body.content.toString(),
+      created: new Date()
     };
     
     barks
