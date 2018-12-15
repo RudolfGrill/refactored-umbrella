@@ -3,13 +3,16 @@
 const express = require("express");
 const cors = require("cors");
 const PORT = 5000;
-
+const monk = require('monk');
 const app = express();
+
+const db = monk('mongodb://127.0.0.1:27017');
+const barks = db.get('barks');
 
 app.use(cors());
 app.use(express.json());
 
-app.get('/', (req, res) => {
+app.get('/', (req, res) => {1
   res.json({
     message: 'Barking 🐕'
   });
@@ -27,6 +30,14 @@ app.post('/barks', (req, res)=>{
       name: req.body.name.toString(),
       content: req.body.content.toString()
     };
+    
+    barks
+      .insert(bark)
+      .then(createdBark => {
+        res.json(createdBark);
+      });
+
+
     console.log(bark);
   } else {
     res.status(422);
