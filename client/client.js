@@ -19,7 +19,6 @@ form.addEventListener('submit', (event) => {
     content,
   };
 
-
   form.style.display = 'none';
   loadingElement.style.display = '';
 
@@ -33,6 +32,7 @@ form.addEventListener('submit', (event) => {
     }).then(response => response.json())
     .then(createdBark => {
       console.log(createdBark);
+      form.reset();
       form.style.display = '';
       loadingElement.style.display = 'none';
     });

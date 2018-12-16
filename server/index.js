@@ -3,49 +3,35 @@
 const express = require("express");
 const cors = require("cors");
 const PORT = 5000;
-//const monk = require('monk');
+const monk = require('monk');
 const app = express();
 require('dotenv').config();
 
 const MongoClient = require('mongodb').MongoClient;
-const PASSWORD = process.env.PASSWORD;
-const uri = `mongodb+srv://rudi:<${PASSWORD}>@barks-uaear.gcp.mongodb.net/test?retryWrites=true`;
-MongoClient.connect(uri, function (err, client) {
-  
+const uri = `mongodb+srv://rudi:<${process.env.PASSWORD}>@barks-uaear.gcp.mongodb.net/test?retryWrites=true`;
+const client = new MongoClient(uri, { useNewUrlParser: true });
+client.connect(err => {
   const collection = client.db("test").collection("devices");
-  if (err) {
-    console.log('Error connecting to Db', err.message);
-    return;
-  }
-  console.log('DATABASE Connection established');
+  console.log('connection made');
+  
   client.close();
 });
-
-/*const MongoClient = require('mongodb').MongoClient;
-const uri = "mongodb+srv://rudi:<PASSWORD>@barks-uaear.gcp.mongodb.net/test?retryWrites=true";
-const db = new MongoClient(uri, { useNewUrlParser: true });
-db.connect(err => {
-  const collection = client.db("test").collection("devices");
-  if (err) {
-    console.log('Error connecting to Db', err.message);
-    return;
-  }
-  console.log('DATABASE Connection established');
-  client.close();
-});*/
-
-
-//const db = monk('mongodb://127.0.0.1:27017');
-//const barks = db.get('barks');
 
 app.use(cors());
 app.use(express.json());
 
 app.get('/', (req, res) => {
-  1
   res.json({
     message: 'Barking 🐕'
   });
+});
+
+app.get('/barks', (req, res) => {
+  barks
+    .find()
+    .then(barks => {
+      res.json(barks);
+    });
 });
 
 function isValidBark(bark) {
