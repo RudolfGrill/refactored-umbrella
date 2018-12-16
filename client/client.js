@@ -24,14 +24,16 @@ form.addEventListener('submit', (event) => {
   loadingElement.style.display = '';
 
   fetch(API_URL, {
-    method: 'POST',
-    body: JSON.stringify(bark),
-    headers:  {
-      'content-type': 'application/json'
-    }
+      method: 'POST',
+      body: JSON.stringify(bark),
+      headers: {
+        'content-type': 'application/json'
+      }
 
-  }).then(response => response.json())
+    }).then(response => response.json())
     .then(createdBark => {
-      console.log();
+      console.log(createdBark);
+      form.style.display = '';
+      loadingElement.style.display = 'none';
     });
 });
