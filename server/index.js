@@ -3,11 +3,21 @@
 const express = require("express");
 const cors = require("cors");
 const PORT = 5000;
-const monk = require('monk');
+//const monk = require('monk');
 const app = express();
+require('dotenv').config();
 
-const db = monk('mongodb://127.0.0.1:27017');
-const barks = db.get('barks');
+const db = require('db')
+db.connect({
+  PASSWORD: process.env.DB_PASS
+})
+
+const MongoClient = require('mongodb').MongoClient;
+const uri = "mongodb+srv://rudi:<PASSWORD>@barks-uaear.gcp.mongodb.net/test?retryWrites=true";
+const db = new MongoClient(uri, { useNewUrlParser: true });
+
+//const db = monk('mongodb://127.0.0.1:27017');
+//const barks = db.get('barks');
 
 app.use(cors());
 app.use(express.json());
