@@ -54,6 +54,7 @@ function listAllBarks(){
     barks.reverse();
     barks.forEach(bark =>{
       const div = document.createElement('div');
+      div.classList.add('barkDiv')
 
       const header = document.createElement('h3');
       header.textContent= bark.name;
@@ -62,7 +63,7 @@ function listAllBarks(){
       contents.textContent = bark.content;
 
       const date = document.createElement('small');
-      date.textContent = bark.date;
+      date.textContent = bark.created;
 
       div.appendChild(header);
       div.appendChild(contents);

@@ -10,7 +10,7 @@ const rateLimit = require("express-rate-limit");
 
 require('dotenv').config();
 
-const db = monk(process.env.MONGO_URI);
+const db = monk(process.env.MONGO_mLAB);
 const barks = db.get('barks');
 const filter = new Filter();
 
