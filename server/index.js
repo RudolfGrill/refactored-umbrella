@@ -1,57 +1,26 @@
 "use strict"
-
-const express = require("express");
+ const express = require("express");
 const cors = require("cors");
 const PORT = 5000;
-const monk = require('monk');
-const app = express();
-require('dotenv').config();
-
-const MongoClient = require('mongodb').MongoClient;
-const uri = `mongodb+srv://rudi:<${process.env.PASSWORD}>@barks-uaear.gcp.mongodb.net/test?retryWrites=true`;
-const client = new MongoClient(uri, { useNewUrlParser: true });
-client.connect(err => {
-  const collection = client.db("test").collection("devices");
-  console.log('connection made');
-  
-  client.close();
-});
-
-app.use(cors());
+ const app = express();
+ app.use(cors());
 app.use(express.json());
-
-app.get('/', (req, res) => {
+ app.get('/', (req, res) => {
   res.json({
     message: 'Barking 🐕'
   });
 });
-
-app.get('/barks', (req, res) => {
-  barks
-    .find()
-    .then(barks => {
-      res.json(barks);
-    });
-});
-
-function isValidBark(bark) {
+ function isValidBark(bark) {
   return bark.name && bark.name.toString().trim() !== '' &&
-    bark.content && bark.content.toString().trim() !== '';
+  bark.content && bark.content.toString().trim() !== '';
 }
-
-app.post('/barks', (req, res, next) => {
+ app.post('/barks', (req, res)=>{
   if (isValidBark(req.body)) {
+    //to db
     const bark = {
       name: req.body.name.toString(),
-      content: req.body.content.toString(),
-      created: new Date()
+      content: req.body.content.toString()
     };
-
-    bark
-      .insert(bark)
-      .then(createdBark => {
-        res.json(createdBark);
-      }).catch(next);
     console.log(bark);
   } else {
     res.status(422);
@@ -60,7 +29,6 @@ app.post('/barks', (req, res, next) => {
     })
   }
 });
-
-app.listen(PORT, () => {
+ app.listen(PORT, () => {
   console.log(`server is up and runing on port ${PORT}`);
-});
+}); 
