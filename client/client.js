@@ -4,9 +4,12 @@ console.log("Hello World!");
 
 const form = document.querySelector('form');
 const loadingElement = document.querySelector('.loading');
+const barksElement = document.querySelector('.barks');
 const API_URL = 'http://localhost:5000/barks';
 
 loadingElement.style.display = 'none';
+
+listAllBarks();
 
 form.addEventListener('submit', (event) => {
   event.preventDefault();
@@ -37,3 +40,15 @@ form.addEventListener('submit', (event) => {
       loadingElement.style.display = 'none';
     });
 });
+
+
+function listAllBarks(){
+  fetch(API_URL)
+  .then(response => response.json())
+  .then(barks => {
+    console.log(barks);
+    barks.forEach(bark =>{
+
+    });
+  });
+};

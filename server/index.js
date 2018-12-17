@@ -7,15 +7,8 @@ const monk = require('monk');
 const app = express();
 require('dotenv').config();
 
-const MongoClient = require('mongodb').MongoClient;
-const uri = `mongodb+srv://rudi:<${process.env.PASSWORD}>@barks-uaear.gcp.mongodb.net/test?retryWrites=true`;
-const client = new MongoClient(uri, { useNewUrlParser: true });
-client.connect(err => {
-  const collection = client.db("barks").collection("barks");
-  console.log('connection made');
-  
-  client.close();
-});
+const db = monk('mongodb+srv://rudi:<password>@barks-uaear.gcp.mongodb.net/test?retryWrites=true');
+const barks = db.get('barks');
 
 app.use(cors());
 app.use(express.json());
@@ -46,13 +39,11 @@ app.post('/barks', (req, res, next) => {
       content: req.body.content.toString(),
       created: new Date()
     };
-
     barks
       .insert(bark)
       .then(createdBark => {
         res.json(createdBark);
       }).catch(next);
-    console.log(bark);
   } else {
     res.status(422);
     res.json({
