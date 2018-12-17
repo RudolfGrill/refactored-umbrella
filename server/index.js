@@ -5,10 +5,14 @@ const cors = require("cors");
 const PORT = 5000;
 const monk = require('monk');
 const app = express();
+const Filter = require('bad-words');
+const rateLimit = require("express-rate-limit");
+
 require('dotenv').config();
 
-const db = monk('mongodb+srv://rudi:<password>@barks-uaear.gcp.mongodb.net/test?retryWrites=true');
+const db = monk(process.env.MONGO_URI);
 const barks = db.get('barks');
+const filter = new Filter();
 
 app.use(cors());
 app.use(express.json());
@@ -32,11 +36,16 @@ function isValidBark(bark) {
     bark.content && bark.content.toString().trim() !== '';
 }
 
+app.use(rateLimit({
+  windowMs: 30 * 1000, // 30 secunds
+  max: 1 // limit each IP to 100 requests per windowMs
+}));
+
 app.post('/barks', (req, res, next) => {
   if (isValidBark(req.body)) {
     const bark = {
-      name: req.body.name.toString(),
-      content: req.body.content.toString(),
+      name: filter.clean(req.body.name.toString()),
+      content: filter.clean(req.body.content.toString()),
       created: new Date()
     };
     barks

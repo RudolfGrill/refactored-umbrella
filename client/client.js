@@ -36,19 +36,40 @@ form.addEventListener('submit', (event) => {
     .then(createdBark => {
       console.log(createdBark);
       form.reset();
-      form.style.display = '';
+      setTimeout(() => {
+        form.style.display = '';
+      }, 30000);
+      listAllBarks();
       loadingElement.style.display = 'none';
     });
 });
 
 
 function listAllBarks(){
+  barksElement.innerHTML = '';
   fetch(API_URL)
   .then(response => response.json())
   .then(barks => {
     console.log(barks);
+    barks.reverse();
     barks.forEach(bark =>{
+      const div = document.createElement('div');
 
+      const header = document.createElement('h3');
+      header.textContent= bark.name;
+
+      const contents = document.createElement('p');
+      contents.textContent = bark.content;
+
+      const date = document.createElement('small');
+      date.textContent = bark.date;
+
+      div.appendChild(header);
+      div.appendChild(contents);
+      div.appendChild(date);
+
+      barksElement. appendChild(div);
     });
-  });
+    loadingElement.style.display = 'none';
+   });
 };
