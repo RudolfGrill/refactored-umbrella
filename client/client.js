@@ -5,7 +5,8 @@ console.log("Hello World!");
 const form = document.querySelector('form');
 const loadingElement = document.querySelector('.loading');
 const barksElement = document.querySelector('.barks');
-const API_URL = 'http://localhost:5000/barks';
+const API_URL = window.location.hostname === '127.0.0.1' ? 'http://localhost:5000/barks' : 'https://';
+
 
 loadingElement.style.display = 'none';
 
