@@ -10,9 +10,7 @@ const rateLimit = require("express-rate-limit");
 
 require('dotenv').config();
 
-//const db = monk(`mongodb://${process.env.USERNAME}:${process.env.PASSWORD}@ds135844.mlab.com:35844/barks`);
 const db = monk(process.env.URI);
-
 const barks = db.get('barks');
 const filter = new Filter();
 

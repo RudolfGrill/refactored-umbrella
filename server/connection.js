@@ -1,6 +1,6 @@
 
 const MongoClient = require('mongodb').MongoClient;
-const uri = `mongodb+srv://rudi:<${process.env.PASSWORD}>@barks-uaear.gcp.mongodb.net/test?retryWrites=true`;
+const uri = process.env.MONGO_URI;
 const client = new MongoClient(uri, { useNewUrlParser: true });
 client.connect(err => {
   const collection = client.db("barks").collection("barks");
