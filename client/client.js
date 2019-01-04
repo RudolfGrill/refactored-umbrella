@@ -1,7 +1,4 @@
-"use strict"
-
-console.log("Hello World!");
-
+'use strict'
 const form = document.querySelector('form');
 const loadingElement = document.querySelector('.loading');
 const API_URL = 'http://localhost:5000/barks';

@@ -1,22 +1,29 @@
-"use strict"
- const express = require("express");
-const cors = require("cors");
+'use strict'
+const express = require('express');
+const cors = require('cors');
+const app = express();
+require('dotenv').config()
+
+
 const PORT = 5000;
- const app = express();
- app.use(cors());
+
+app.use(cors());
+
 app.use(express.json());
- app.get('/', (req, res) => {
+
+app.get('/', (req, res) => {
   res.json({
     message: 'Barking 🐕'
   });
 });
- function isValidBark(bark) {
+
+function isValidBark(bark) {
   return bark.name && bark.name.toString().trim() !== '' &&
-  bark.content && bark.content.toString().trim() !== '';
+    bark.content && bark.content.toString().trim() !== '';
 }
- app.post('/barks', (req, res)=>{
+
+app.post('/barks', (req, res) => {
   if (isValidBark(req.body)) {
-    //to db
     const bark = {
       name: req.body.name.toString(),
       content: req.body.content.toString()
@@ -29,6 +36,7 @@ app.use(express.json());
     })
   }
 });
- app.listen(PORT, () => {
+
+app.listen(PORT, () => {
   console.log(`server is up and runing on port ${PORT}`);
-}); 
+});
