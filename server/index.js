@@ -1,11 +1,17 @@
 'use strict'
+
 const express = require('express');
 const cors = require('cors');
+const PORT = 3000;
+const monk = require('monk');
 const app = express();
-require('dotenv').config()
+const Filter = require('bad-words');
+const rateLimit = require("express-rate-limit");
+require('dotenv').config();
 
-
-const PORT = 5000;
+const db = monk(process.env.URI);
+const barks = db.get('barks');
+const filter = new Filter();
 
 app.use(cors());
 
@@ -17,18 +23,38 @@ app.get('/', (req, res) => {
   });
 });
 
+app.get('/barks', (req, res) => {
+  barks
+    .find()
+    .then(barks => {
+      res.json(barks);
+    });
+});
+
 function isValidBark(bark) {
   return bark.name && bark.name.toString().trim() !== '' &&
     bark.content && bark.content.toString().trim() !== '';
 }
 
-app.post('/barks', (req, res) => {
+app.use(rateLimit({
+  windowMs: 30 * 1000, // 30 secunds
+  max: 1 // limit each IP to 100 requests per windows
+}));
+
+app.post('/barks', (req, res, next) => {
   if (isValidBark(req.body)) {
     const bark = {
-      name: req.body.name.toString(),
-      content: req.body.content.toString()
+      name: filter.clean(req.body.name.toString()),
+      content: filter.clean(req.body.content.toString()),
+      created: new Date()
     };
-    console.log(bark);
+    console.log(bark); 
+
+    barks
+      .insert(bark)
+      .then(createdBark => {
+        res.json(createdBark);
+      }).catch(next);
   } else {
     res.status(422);
     res.json({

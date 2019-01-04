@@ -9,3 +9,14 @@
 .loading {
   text-align: center;
 }
+
+.barks{
+  width: 80%;
+  margin: 0 auto;
+}
+
+.barkDiv{
+  width: 80%;
+  margin: 0 auto;
+  border-bottom: 3px solid #00ADD6;
+}
