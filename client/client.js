@@ -5,7 +5,8 @@ console.log("Hello World!");
 const form = document.querySelector('form');
 const loadingElement = document.querySelector('.loading');
 const barksElement = document.querySelector('.barks');
-const API_URL = window.location.hostname === '127.0.0.1' ? 'http://localhost:5000/barks' : 'https://';
+//const API_URL = window.location.hostname === '127.0.0.1' ? 'http://localhost:5000/barks' : 'https://';
+const API_URL = 'http://localhost:5000/barks';
 
 
 loadingElement.style.display = 'none';
@@ -46,32 +47,32 @@ form.addEventListener('submit', (event) => {
 });
 
 
-function listAllBarks(){
+function listAllBarks() {
   barksElement.innerHTML = '';
   fetch(API_URL)
-  .then(response => response.json())
-  .then(barks => {
-    console.log(barks);
-    barks.reverse();
-    barks.forEach(bark =>{
-      const div = document.createElement('div');
-      div.classList.add('barkDiv')
+    .then(response => response.json())
+    .then(barks => {
+      console.log(barks);
+      barks.reverse();
+      barks.forEach(bark => {
+        const div = document.createElement('div');
+        div.classList.add('barkDiv')
 
-      const header = document.createElement('h3');
-      header.textContent= bark.name;
+        const header = document.createElement('h3');
+        header.textContent = bark.name;
 
-      const contents = document.createElement('p');
-      contents.textContent = bark.content;
+        const contents = document.createElement('p');
+        contents.textContent = bark.content;
 
-      const date = document.createElement('small');
-      date.textContent = bark.created;
+        const date = document.createElement('small');
+        date.textContent = bark.created;
 
-      div.appendChild(header);
-      div.appendChild(contents);
-      div.appendChild(date);
+        div.appendChild(header);
+        div.appendChild(contents);
+        div.appendChild(date);
 
-      barksElement. appendChild(div);
+        barksElement.appendChild(div);
+      });
+      loadingElement.style.display = 'none';
     });
-    loadingElement.style.display = 'none';
-   });
 };
