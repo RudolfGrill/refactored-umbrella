@@ -1,4 +1,4 @@
-"use strict"
+'use strict'
 
 const form = document.querySelector('form');
 const loadingElement = document.querySelector('.loading');

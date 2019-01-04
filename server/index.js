@@ -7,11 +7,9 @@ const monk = require('monk');
 const app = express();
 const Filter = require('bad-words');
 const rateLimit = require("express-rate-limit");
-
 require('dotenv').config();
 
 const db = monk(process.env.URI);
-
 const barks = db.get('barks');
 const filter = new Filter();
 
