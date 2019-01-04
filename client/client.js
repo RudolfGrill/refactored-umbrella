@@ -1,7 +1,7 @@
 'use strict'
 const form = document.querySelector('form');
 const loadingElement = document.querySelector('.loading');
-const API_URL = 'http://localhost:5000/barks';
+const API_URL = 'http://localhost:3000/barks';
 
 loadingElement.style.display = 'none';
 
@@ -28,7 +28,6 @@ form.addEventListener('submit', (event) => {
 
     }).then(response => response.json())
     .then(createdBark => {
-      console.log(createdBark);
       form.reset();
       form.style.display = '';
       loadingElement.style.display = 'none';
