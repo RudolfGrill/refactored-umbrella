@@ -1,8 +1,8 @@
-"use strict"
+'use strict'
 
-const express = require("express");
-const cors = require("cors");
-const PORT = 5000;
+const express = require('express');
+const cors = require('cors');
+const PORT = 3000;
 const monk = require('monk');
 const app = express();
 const Filter = require('bad-words');
@@ -10,14 +10,13 @@ const rateLimit = require("express-rate-limit");
 
 require('dotenv').config();
 
-const db = monk(`mongodb://${process.env.USERNAME}:${process.env.PASSWORD}@ds135844.mlab.com:35844/barks`);
+const db = monk(process.env.URI);
+
 const barks = db.get('barks');
 const filter = new Filter();
 
-console.log(barks);
-console.log(barks.content);
-
 app.use(cors());
+
 app.use(express.json());
 
 app.get('/', (req, res) => {
@@ -41,7 +40,7 @@ function isValidBark(bark) {
 
 app.use(rateLimit({
   windowMs: 30 * 1000, // 30 secunds
-  max: 1 // limit each IP to 100 requests per windowMs
+  max: 1 // limit each IP to 100 requests per windows
 }));
 
 app.post('/barks', (req, res, next) => {
@@ -51,6 +50,8 @@ app.post('/barks', (req, res, next) => {
       content: filter.clean(req.body.content.toString()),
       created: new Date()
     };
+    console.log(bark); 
+
     barks
       .insert(bark)
       .then(createdBark => {

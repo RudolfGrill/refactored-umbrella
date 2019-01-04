@@ -1,12 +1,10 @@
 "use strict"
 
-console.log("Hello World!");
-
 const form = document.querySelector('form');
 const loadingElement = document.querySelector('.loading');
 const barksElement = document.querySelector('.barks');
 //const API_URL = window.location.hostname === '127.0.0.1' ? 'http://localhost:5000/barks' : 'https://';
-const API_URL = 'http://localhost:5000/barks';
+const API_URL = 'http://127.0.0.1:3000/barks';
 
 
 loadingElement.style.display = 'none';
@@ -21,22 +19,19 @@ form.addEventListener('submit', (event) => {
 
   const bark = {
     name,
-    content,
+    content
   };
 
   form.style.display = 'none';
   loadingElement.style.display = '';
-
   fetch(API_URL, {
       method: 'POST',
       body: JSON.stringify(bark),
       headers: {
         'content-type': 'application/json'
       }
-
     }).then(response => response.json())
     .then(createdBark => {
-      console.log(createdBark);
       form.reset();
       setTimeout(() => {
         form.style.display = '';
@@ -52,7 +47,6 @@ function listAllBarks() {
   fetch(API_URL)
     .then(response => response.json())
     .then(barks => {
-      console.log(barks);
       barks.reverse();
       barks.forEach(bark => {
         const div = document.createElement('div');
