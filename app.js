@@ -1,4 +1,4 @@
-'use strict'
+'use strict';
 
 const express = require('express');
 const cors = require('cors');
@@ -7,6 +7,8 @@ const monk = require('monk');
 const app = express();
 const Filter = require('bad-words');
 const rateLimit = require("express-rate-limit");
+const path = require('path');
+
 
 require('dotenv').config();
 
@@ -19,9 +21,7 @@ app.use(cors());
 app.use(express.json());
 
 app.get('/', (req, res) => {
-  res.json({
-    message: 'Barking 🐕'
-  });
+  res.sendFile(path.join(__dirname, 'client/index.html'));
 });
 
 app.get('/barks', (req, res) => {
@@ -64,6 +64,14 @@ app.post('/barks', (req, res, next) => {
   }
 });
 
-app.listen(PORT, () => {
-  console.log(`server is up and runing on port ${PORT}`);
-});
+if (module === require.main) {
+  // [START server]
+  // Start the server
+  const server = app.listen(process.env.PORT || 3000, () => {
+    const port = server.address().port;
+    console.log(`App listening on port ${port}`);
+  });
+  // [END server]
+}
+
+module.exports = app;

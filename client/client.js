@@ -2,14 +2,10 @@
 
 const form = document.querySelector('form');
 const loadingElement = document.querySelector('.loading');
-<<<<<<< HEAD
-const API_URL = 'http://localhost:3000/barks';
-=======
 const barksElement = document.querySelector('.barks');
 //const API_URL = window.location.hostname === '127.0.0.1' ? 'http://localhost:5000/barks' : 'https://';
 const API_URL = 'http://127.0.0.1:3000/barks';
 
->>>>>>> 2c6367018f34bef73190900b85020df744a3569d
 
 loadingElement.style.display = 'none';
 
