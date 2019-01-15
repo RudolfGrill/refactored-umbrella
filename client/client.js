@@ -5,6 +5,7 @@ const loadingElement = document.querySelector('.loading');
 const barksElement = document.querySelector('.barks');
 const API_URL = window.location.hostname === '127.0.0.1' ? 'http://127.0.0.1:5000/barks' : 'https://mybarks.appspot.com/barks';
 
+console.log(window.location.hostname);
 
 loadingElement.style.display = 'none';
 
