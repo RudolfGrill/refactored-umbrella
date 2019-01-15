@@ -21,8 +21,19 @@ app.use(cors());
 app.use(express.json());
 
 app.get('/', (req, res) => {
-  res.sendFile(path.join(__dirname, 'client/index.html'));
+  res.redirect('./client/index.html');
+
 });
+
+/*app.get('/', (req, res) => {
+  res.json({
+    message: 'Barking 🐕'
+  });
+});*/
+
+/*app.get('/', (req, res) => {
+  res.sendFile(path.join(__dirname, 'client/index.html'));
+});*/
 
 app.get('/barks', (req, res) => {
   barks
@@ -49,7 +60,7 @@ app.post('/barks', (req, res, next) => {
       content: filter.clean(req.body.content.toString()),
       created: new Date()
     };
-    console.log(bark); 
+    console.log(bark);
 
     barks
       .insert(bark)

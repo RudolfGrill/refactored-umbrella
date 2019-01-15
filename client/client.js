@@ -3,8 +3,7 @@
 const form = document.querySelector('form');
 const loadingElement = document.querySelector('.loading');
 const barksElement = document.querySelector('.barks');
-//const API_URL = window.location.hostname === '127.0.0.1' ? 'http://localhost:5000/barks' : 'https://';
-const API_URL = 'http://127.0.0.1:3000/barks';
+const API_URL = window.location.hostname === '127.0.0.1' ? 'http://127.0.0.1:5000/barks' : 'https://mybarks.appspot.com/barks';
 
 
 loadingElement.style.display = 'none';
